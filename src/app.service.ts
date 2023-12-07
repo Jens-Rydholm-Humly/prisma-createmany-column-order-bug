@@ -8,8 +8,10 @@ export class AppService {
 
   async insertRecordsAndPrintResultingQueries(): Promise<void> {
     await this.clearRecentQueries();
-    await this.createSingleRecord();
-    await this.createManyRecords();
+    for (let i = 0; i < 5; i++) {
+      await this.createSingleRecord();
+      await this.createManyRecords();
+    }
     await this.printRecentQueries();
   }
 

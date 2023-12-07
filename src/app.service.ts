@@ -18,14 +18,16 @@ export class AppService {
       {
         result: string;
       }[]
-    >(Prisma.sql(['select cast(pg_stat_statements_reset() as text) as result']));
+    >(
+      Prisma.sql(['select cast(pg_stat_statements_reset() as text) as result']),
+    );
   }
 
   private async printRecentQueries() {
-    const queries = await this.prisma.$queryRaw<{calls:Number,sql:string}[]>(
-      Prisma.sql(['select calls,query as "sql" from pg_stat_statements']),
-    );
-    for(const query of queries) {
+    const queries = await this.prisma.$queryRaw<
+      { calls: number; sql: string }[]
+    >(Prisma.sql(['select calls,query as "sql" from pg_stat_statements']));
+    for (const query of queries) {
       console.log(`${query.calls} calls for: ${query.sql}`);
     }
   }

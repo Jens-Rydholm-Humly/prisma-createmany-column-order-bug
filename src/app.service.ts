@@ -6,12 +6,11 @@ import { Prisma } from '@prisma/client';
 export class AppService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getHello(): Promise<string> {
+  async insertRecordsAndPrintResultingQueries(): Promise<void> {
     await this.clearRecentQueries();
     await this.createSingleRecord();
     await this.createManyRecords();
     await this.printRecentQueries();
-    return 'Hello World!';
   }
 
   private async clearRecentQueries() {
@@ -27,7 +26,7 @@ export class AppService {
       Prisma.sql(['select calls,query as "sql" from pg_stat_statements']),
     );
     for(const query of queries) {
-      console.log(`${query.calls} for: ${query.sql}`);
+      console.log(`${query.calls} calls for: ${query.sql}`);
     }
   }
 

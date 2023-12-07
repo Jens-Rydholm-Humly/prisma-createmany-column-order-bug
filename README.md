@@ -7,6 +7,11 @@ To start a PostgreSQL instance with the appropriate configuration (enabling `pg_
 docker-compose up --build
 ```
 
+Install dependencies:
+```bash
+pnpm install
+```
+
 Deploy the Prisma migration scripts:
 ```bash
 npx prisma migrate deploy
@@ -14,7 +19,6 @@ npx prisma migrate deploy
 
 To build the code reproducing the bug:
 ```bash
-pnpm install
 pnpm run start
 ```
 

@@ -6,3 +6,9 @@ To start a PostgreSQL instance with the appropriate configuration (enabling `pg_
 ```bash
 docker-compose up --build
 ```
+
+To build the code reproducing the bug:
+```bash
+pnpm install
+pnpm run start
+```

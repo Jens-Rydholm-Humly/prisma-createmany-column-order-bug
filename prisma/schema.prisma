@@ -1,0 +1,19 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model DataPoints {
+  id                                Int                 @default(autoincrement()) @id
+  alpha                             Int                 @map("alpha")
+  beta                              Int                 @map("beta")
+  gamma                             Int                 @map("gamma")
+  delta                             Int                 @map("delta")
+  epsilon                           Int                 @map("epsilon")
+
+  @@map("data_points")
+}

@@ -1,0 +1,29 @@
+version: "3"
+services:
+
+  postgres:
+    build: postgres-with-stats/.
+    image: postgres-with-stats
+    container_name: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=myuser
+      - POSTGRES_PASSWORD=mypassword
+      - POSTGRES_DB=mydatabase
+    volumes:
+      - postgres-storage:/var/lib/postgresql/data:rw
+    ports:
+      - '5440:5432'
+    networks:
+      - mynetwork
+
+volumes:
+  postgres-storage:
+    driver: local
+
+networks:
+  mynetwork:
+
+secrets:
+  npmrc:
+    file: ~/.npmrc

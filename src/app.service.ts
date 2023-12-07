@@ -1,14 +1,34 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from './prisma.service';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class AppService {
   constructor(private readonly prisma: PrismaService) {}
 
   async getHello(): Promise<string> {
+    await this.clearRecentQueries();
     await this.createSingleRecord();
     await this.createManyRecords();
+    await this.printRecentQueries();
     return 'Hello World!';
+  }
+
+  private async clearRecentQueries() {
+    await this.prisma.$queryRaw<
+      {
+        result: string;
+      }[]
+    >(Prisma.sql(['select cast(pg_stat_statements_reset() as text) as result']));
+  }
+
+  private async printRecentQueries() {
+    const queries = await this.prisma.$queryRaw<{calls:Number,sql:string}[]>(
+      Prisma.sql(['select calls,query as "sql" from pg_stat_statements']),
+    );
+    for(const query of queries) {
+      console.log(`${query.calls} for: ${query.sql}`);
+    }
   }
 
   private async createSingleRecord() {

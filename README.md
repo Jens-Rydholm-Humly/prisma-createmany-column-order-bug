@@ -12,3 +12,5 @@ To build the code reproducing the bug:
 pnpm install
 pnpm run start
 ```
+
+This will print the executed SQL queries and the number of calls for each, showing that the createMany queries get random column orders.
